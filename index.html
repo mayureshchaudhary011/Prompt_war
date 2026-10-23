@@ -1,1 +1,83 @@
-git add.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AEGIS-Grid | Tactical Command HUD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&display=swap');
+        body { font-family: 'Share Tech Mono', monospace; background-color: #050811; color: #00f0ff; }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .tactical-border { border: 1px solid rgba(0, 240, 255, 0.25); clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px)); }
+        .hud-scanline { background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; pointer-events: none; }
+        .glow-cyan { box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        .glow-red { box-shadow: 0 0 20px rgba(255, 0, 60, 0.5); }
+    </style>
+</head>
+<body class="min-h-screen p-4 flex flex-col justify-between relative overflow-hidden">
+    <div class="absolute inset-0 hud-scanline"></div>
+
+    <!-- TACTICAL HEADER -->
+    <header class="tactical-border bg-slate-950/90 p-4 mb-4 flex justify-between items-center z-10">
+        <div class="flex items-center gap-4">
+            <div class="w-4 h-4 bg-cyan-400 animate-ping"></div>
+            <h1 class="font-orbitron text-2xl font-black tracking-widest text-white">TACTICAL-DISPATCH // <span class="text-cyan-400">AEGIS-GRID</span></h1>
+        </div>
+        <div class="text-xs space-x-6">
+            <span>GRID_STATUS: <strong class="text-emerald-400">DEFCON 3</strong></span>
+            <span>PII_SHIELD: <strong class="text-cyan-400">ENGAGED</strong></span>
+        </div>
+    </header>
+
+    <!-- HUD GRID LAYOUT -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-4 my-auto z-10 max-w-7xl mx-auto w-full">
+        <!-- INPUT COCKPIT -->
+        <div class="lg:col-span-5 tactical-border bg-slate-950/80 p-5 space-y-4">
+            <h2 class="font-orbitron text-lg text-white border-b border-cyan-500/30 pb-2">// INCIDENT_TELEMETRY_INGEST</h2>
+            
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="document.getElementById('hudInput').value='ALERT: River level Sector-4 reached 12.5m, flow 450 m3/s.'" class="p-2 text-xs border border-cyan-500/40 hover:bg-cyan-500/20 text-cyan-300">SYSTEM TEST: FLOOD</button>
+                <button onclick="document.getElementById('hudInput').value='WARNING: Grid load at 950MW on 1000MW max capacity.'" class="p-2 text-xs border border-amber-500/40 hover:bg-amber-500/20 text-amber-300">SYSTEM TEST: GRID</button>
+            </div>
+
+            <textarea id="hudInput" rows="6" class="w-full bg-slate-900 border border-cyan-500/40 p-3 text-xs text-cyan-200 focus:outline-none focus:border-cyan-400" placeholder="AWAITING TELEMETRY STREAM..."></textarea>
+            
+            <button onclick="runHudAgent()" class="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-orbitron font-bold tracking-widest glow-cyan">EXECUTE TRIAGE ROUTINE</button>
+        </div>
+
+        <!-- MONITOR & LOG TERMINAL -->
+        <div class="lg:col-span-7 tactical-border bg-slate-950/80 p-5 space-y-4">
+            <h2 class="font-orbitron text-lg text-white border-b border-cyan-500/30 pb-2">// TELEMETRY_TRACE & DISPATCH_GATE</h2>
+            
+            <div class="bg-slate-900 border border-cyan-500/30 p-3 text-xs space-y-1">
+                <span class="text-slate-500">PII SANITIZATION LAYER:</span>
+                <div id="hudPiiOutput" class="text-emerald-400">[SHIELD INACTIVE - NO DATA]</div>
+            </div>
+
+            <div id="hudTrace" class="bg-black border border-cyan-500/40 p-4 h-48 text-xs text-cyan-400 overflow-y-auto">
+> AEGIS TACTICAL HUD READY.
+> AWAITING MANUAL INPUT OR PRESET TRIGGER.
+            </div>
+
+            <!-- HITL DISPATCH CONFIRMATION -->
+            <div class="tactical-border border-red-500/50 bg-red-950/20 p-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-orbitron text-red-400 font-bold text-sm">HUMAN AUTHORIZATION REQUIRED</h3>
+                    <p class="text-xs text-slate-400">Confirm physical team dispatch signal.</p>
+                </div>
+                <button onclick="document.getElementById('hudTrace').innerText+='\n\n[DISPATCH AUTHORIZED BY COMMANDER]'" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-orbitron text-xs font-bold glow-red">AUTHORIZE</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center text-xs text-slate-600 z-10">AEGIS COMMAND HUD // PROMPTWARS PROTOCOL</footer>
+
+    <script>
+        function runHudAgent() {
+            const input = document.getElementById('hudInput').value;
+            document.getElementById('hudPiiOutput').innerText = input.replace(/\d{3}-\d{3}-\d{4}/g, '[REDACTED PHONE]');
+            document.getElementById('hudTrace').innerText += `\n\n> TRIAGE COMPLETE\n> Velocity: 10.75m/s | Time-To-Impact: 12 min\n> ACTION: AUTHORIZATION PENDING...`;
+        }
+    </script>
+</body>
+</html>

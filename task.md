@@ -1,0 +1,22 @@
+# Tasks: AEGIS-Grid Autonomous Disaster Triage & Crisis Management System
+
+- [/] Phase 1: Project Structure & File Setup <!-- id: 1 -->
+  - [x] Identify and configure local Python 3.12 runtime environment <!-- id: 1.1 -->
+  - [/] Create and verify all root files (`main.py`, `index.html`, `test_agent.py`, `requirement.txt`, `vercel.json`, `README.md`) <!-- id: 1.2 -->
+  - [ ] Clean up misplaced workflow copies in `.github/workflows/` <!-- id: 1.3 -->
+- [ ] Phase 2: Python Environment & Dependencies <!-- id: 2 -->
+  - [ ] Install required backend libraries (`fastapi`, `uvicorn`, `pydantic`, `google-genai`) <!-- id: 2.1 -->
+  - [ ] Verify test runner capability <!-- id: 2.2 -->
+- [ ] Phase 3: Automated Testing & Verification <!-- id: 3 -->
+  - [ ] Execute `test_agent.py` test suite <!-- id: 3.1 -->
+  - [ ] Verify 100% test assertions pass for PII sanitization and mathematical tool invariants <!-- id: 3.2 -->
+- [ ] Phase 4: Local Backend Server & Health Check <!-- id: 4 -->
+  - [ ] Start FastAPI server with Uvicorn on port 8000 <!-- id: 4.1 -->
+  - [ ] Query and verify health check endpoint `GET /` (`status: online`) <!-- id: 4.2 -->
+- [ ] Phase 5: End-to-End System Integration & HITL Workflow <!-- id: 5 -->
+  - [ ] Test `POST /api/agent/triage` with disaster telemetry containing sensitive PII <!-- id: 5.1 -->
+  - [ ] Verify PII redaction, deterministic tool execution, and HITL `action_id` generation <!-- id: 5.2 -->
+  - [ ] Test `POST /api/agent/approve` Human-in-the-Loop decision flow <!-- id: 5.3 -->
+- [ ] Phase 6: Frontend Dashboard & Walkthrough Artifacts <!-- id: 6 -->
+  - [ ] Complete robust, responsive `index.html` dark-mode UI with dual-mode (backend API + client-side simulation fallback) <!-- id: 6.1 -->
+  - [ ] Generate comprehensive `walkthrough.md` for hackathon judges <!-- id: 6.2 -->
